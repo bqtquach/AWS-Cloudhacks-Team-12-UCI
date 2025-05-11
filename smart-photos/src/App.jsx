@@ -1,28 +1,51 @@
 import { useState } from 'react';
-import analysisData from './data.json';
 import compareData from './comparemessage.json';
 import MetadataDisplay from './MetadataDisplay';
 import './style.css';
 
 function AnalyzePage({ switchPage }) {
   const [imageSrc, setImageSrc] = useState(null);
-  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [metadata, setMetadata] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setShowAnalysis(false); // reset metadata
-      const reader = new FileReader();
-      reader.onloadend = () => setImageSrc(reader.result);
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+    setImageSrc(URL.createObjectURL(file));
+    setImageFile(file);
+    setMetadata(null);
+    setError(null);
   };
 
-  const handleGenerate = () => {
-    if (imageSrc) {
-      setShowAnalysis(true);
-    } else {
+  const handleGenerate = async () => {
+    if (!imageFile) {
       alert("Please upload an image first.");
+      return;
+    }
+
+    setLoading(true);
+    setMetadata(null);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', imageFile);
+
+      const response = await fetch('http://localhost:8080/analyze', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) throw new Error('Failed to get analysis from server');
+      const result = await response.json();
+      setMetadata(result);
+    } catch (err) {
+      console.error(err);
+      setError('Image analysis failed. Check server connection.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,9 +79,10 @@ function AnalyzePage({ switchPage }) {
         <div className="card">
           <h2>Image Analysis</h2>
           <div className="analysis-box scrollable-box">
-            {showAnalysis ? (
-              <MetadataDisplay data={analysisData} />
-            ) : (
+            {loading && <p>Analyzing image...</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {metadata && <MetadataDisplay data={metadata} />}
+            {!loading && !metadata && !error && (
               <>
                 <div className="upload-icon">🖼</div>
                 <p className="hint">Upload an image and click "Generate" to see analysis</p>

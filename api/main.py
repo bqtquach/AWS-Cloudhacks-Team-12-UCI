@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 import boto3
 from dotenv import load_dotenv
@@ -11,25 +12,31 @@ from llm import query_claude
 # Load environment variables from .env file
 load_dotenv()
 
-
-client = boto3.client(
+# Initialize AWS clients
+rekognition = boto3.client(
     "rekognition",
     aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-    region_name=os.getenv("AWS_REGION", "us-west-2"),
+    region_name=os.getenv("AWS_REGION", "us-west-2")
 )
 
-
-# Initialize Bedrock client
 bedrock = boto3.client(
-    service_name="bedrock-runtime",
+    "bedrock-runtime",
     aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-    region_name=os.getenv("AWS_REGION", "us-west-2"),
+    region_name=os.getenv("AWS_REGION", "us-west-2")
 )
 
-
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 
 @app.get("/")
@@ -38,7 +45,7 @@ async def root():
     image_path = "IMG_1334.JPG"
 
     with open(image_path, "rb") as image_file:
-        response = get_image_labels(image_file.read(), client)
+        response = get_image_labels(image_file.read(), rekognition)
 
     return response
 
@@ -47,7 +54,7 @@ async def root():
 async def analyze_image(file: UploadFile = File(...)):
 
     contents = await file.read()
-    image_analysis = get_image_labels(contents, client)
+    image_analysis = get_image_labels(contents, rekognition)
 
     print(image_analysis)
 

@@ -16,7 +16,7 @@ def query_claude(user_query: str, bedrock: boto3.client) -> Dict[str, Any]:
     """
     # System role and prompt
     system_prompt = """
-Your task is to take information about a photo and extract data from it. You are to output each of your responses in a particular format. In the provided format, any text marked with < > is a variable that you are to fill in with the appropriate data. The format is as follows:
+Your task is to take information about a photo and extract data from it. You are to output each of your responses in a particular format. In the provided format, any text marked with < > is a variable that you are to replace with the appropriate data (without the < >). The format is as follows:
 {
   "summary": {
     "Subjects": "<Group of friends>",
@@ -120,6 +120,9 @@ Always maintain this role and perspective in your responses."""
             accept="application/json",
             body=json.dumps(request_body),
         )
+
+        print("----CLAUDE RESPONSE----")
+        print(response)
 
         # Parse the response
         response_body = json.loads(response["body"].read())

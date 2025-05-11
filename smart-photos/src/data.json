@@ -1,0 +1,79 @@
+{
+    "summary": {
+        "Subjects": "One young person (teen/young adult)",
+        "Setting": "Beach or coastal outdoor location",
+        "Lighting": "Natural daylight, bright summer lighting",
+        "Mood": "Happy, cheerful",
+        "Camera": "35-50mm, f/4-5.6 recommended",
+        "Categories": "7 analysis areas"
+    },
+    "accordion": {
+        "cues": [
+            {
+                "title": "Genuine Expression Prompt",
+                "instruction": "Think about your favorite summer memory - when I count to three, tell me about it with enthusiasm!",
+                "note": "Capture on 'two' to get the natural anticipatory smile"
+            },
+            {
+                "title": "Natural Head Angle",
+                "instruction": "Look just past my shoulder at something interesting in the background, like you just noticed it.",
+                "note": "Creates a more candid look than direct camera eye contact"
+            },
+            {
+                "title": "Energy Direction",
+                "instruction": "Take a half step toward me while smiling, as if you're greeting a friend you're excited to see.",
+                "note": "Creates forward momentum and positive engagement"
+            },
+            {
+                "title": "Comfortable Stance",
+                "instruction": "Place your weight on your back foot and relax your shoulders - like you're casually hanging out.",
+                "note": "Helps achieve the relaxed beach vibe without looking posed"
+            },
+            {
+                "title": "Laughter Trigger",
+                "instruction": "Tell me the funniest thing that happened on this beach trip so far.",
+                "note": "Captures genuine emotion and the authentic mouth-open smile detected in the analysis"
+            }
+        ],
+        "poses": [
+            "Subject is smiling broadly with mouth open and eyes partially/fully closed (expression of joy)",
+            "Head is tilted slightly (roll of -5.8°) with minor turn (yaw of -3.5°)",
+            "Body language appears relaxed and happy in a beach/summer setting",
+            "Subject positioned slightly right of center in frame"
+        ],
+        "environment": [
+            "Outdoors at a beach location with clear sky visible",
+            "Summer setting with bright natural daylight",
+            "Coastal/beach environment provides relaxed, vacation context",
+            "Background likely includes ocean, sand, and possibly other beach elements"
+        ],
+        "technical": [
+            "Good brightness (value: 68.7) suitable for outdoor portrait",
+            "Excellent sharpness (value: 83.1) showing clear facial details",
+            "Face occupies approximately 10% of frame width, suggesting a medium shot",
+            "Recommended focal length: 35-50mm to maintain natural facial proportions",
+            "Depth of field: f/4-5.6 to keep subject sharp while softly blurring beach background"
+        ],
+        "composition": [
+            "Subject is positioned right of center (bounding box center at ~64% across frame width)",
+            "Face positioned in upper half of frame (bounding box centered at ~54% of frame height)",
+            "Leave appropriate headroom above the subject",
+            "Include beach elements and sky in composition to establish setting",
+            "Consider slight reframing to place subject at rule-of-thirds intersection"
+        ],
+        "lighting": [
+            "Bright natural daylight typical of beach/summer setting",
+            "Even illumination across face (brightness 68.7) without harsh shadows",
+            "Consider using reflector to fill shadows if shooting in direct sunlight",
+            "Position subject so sun is slightly to their side rather than directly overhead",
+            "Watch for squinting in bright beach conditions - find angles that minimize this"
+        ],
+        "postprocessing": [
+            "Adjust white balance to maintain warm summer tones while keeping skin tones natural",
+            "Consider slight vibrance increase to enhance beach/summer atmosphere",
+            "Subtle vignetting could help draw attention to the happy subject",
+            "Ensure coastal colors (blues of water/sky, sand tones) are well-balanced",
+            "Light skin retouching if needed while preserving the natural summer look"
+        ]
+    }
+}

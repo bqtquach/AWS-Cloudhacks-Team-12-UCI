@@ -43,7 +43,7 @@ export default function App() {
       const formData = new FormData();
       formData.append('file', imageFile);
 
-      const response = await fetch('http://44.243.40.103/analyze', {
+      const response = await fetch('https://44.243.40.103/analyze', {
         method: 'POST',
         body: formData
       });

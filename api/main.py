@@ -1,12 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 import boto3
 from dotenv import load_dotenv
+import json
 import os
 
 from image_processor import get_image_labels
+from llm import query_claude
 
 # Load environment variables from .env file
 load_dotenv()
+
 
 client = boto3.client(
     "rekognition",
@@ -14,6 +17,16 @@ client = boto3.client(
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
     region_name=os.getenv("AWS_REGION", "us-west-2"),
 )
+
+
+# Initialize Bedrock client
+bedrock = boto3.client(
+    service_name="bedrock-runtime",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.getenv("AWS_REGION", "us-west-2"),
+)
+
 
 app = FastAPI()
 
@@ -27,6 +40,20 @@ async def root():
         response = get_image_labels(image_file.read(), client)
 
     return response
+
+
+@app.post("/analyze")
+async def analyze_image(file: UploadFile = File(...)):
+
+    contents = await file.read()
+    image_analysis = get_image_labels(contents, client)
+
+    print(image_analysis)
+
+    response = query_claude(json.dumps(image_analysis), bedrock)
+
+    return response
+
 
 @app.get("/image1/{image}")     #One Image
 async def sendone(image: "png"):

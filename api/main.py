@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
+from mangum import Mangum
 import boto3
 from dotenv import load_dotenv
 import json
@@ -104,3 +105,6 @@ async def sendone(image1: "png", image2: "png"):
     if response1.status_code == 200 and response2.status_code == 200:
           return {"image1_score": response1.json(), "image2_score": response2.json()}
   
+
+
+handler = Mangum(app)

@@ -2,10 +2,13 @@
 *Run on your own Machine*
 
 
-To run go into API folder and type in 'uvicorn main:app --reload --port 8080' make sure you have all requirements installed as shown
-in the API folder's readme.md document.
+To run, clone repository into a folder, go into API folder and follow the folder's readme instructions.
 
-Next step you will have to go into the smart-photo folder and type in 'npm install' followed by 'npm run dev' this will let you
+BEFORE YOU RUN
+Add in a .env file with your AWS Key, AWS Secret Key, and Region.
+
+
+Next, you will have to go into the smart-photo folder and type in 'npm install' followed by 'npm run dev' this will let you
 host the application on your own machine.
 
 
